@@ -25,13 +25,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
     });
     const salary = document.querySelector('#salary');
-    setTextValue('.salary-output', salary.value);
+    const output = document.querySelector('.salary-output');
+    output.textContent=salary.value;
     salary.addEventListener('input', function() {
-        setTextValue('.salary-output', salary.value);
+        output.textContent=salary.value;
     });
 });
 const save = () => 
 { 
+
     try {
         let employeeObject = createEmployeePayroll(); 
         createAndUpdateStorage(employeeObject);     
@@ -77,9 +79,40 @@ const createAndUpdateStorage = (employee) => {
   else{
       employeePayrollList=[employee];
   }
-  alert(employeePayrollList.toString);
+  alert(employeePayrollList.toString());
   localStorage.setItem("EmployeePayrollList",JSON.stringify(employeePayrollList));
 }
+const resetForm = () =>
+    { 
+        setValue('#name',''); 
+        unsetSelectedValues('[name=profile]'); 
+        unsetSelectedValues('[name=gender]'); 
+        unsetSelectedValues('[name=department]'); 
+        setValue('#salary', ' '); 
+        setValue('#notes',' ');
+        setValue('#day','1');
+        setValue('#month','Jan');
+        setValue('#year','2020'); 
+    }
+           
+    const unsetSelectedValues = (propertyValue) => 
+    { 
+        let allItems = document.querySelectorAll(propertyValue); 
+        allItems.forEach(item => { item.checked = false; }
+            );
+    } 
+           
+    const setTextValue = (id, value) => 
+    {
+        const element = document.querySelector(id); 
+        element.textContent = value; 
+    } 
+    
+    const setValue = (id, value) =>
+    {
+        const element = document.querySelector(id);
+        element.value = value; 
+    }
            
     const getSelectedValues = (propertyValue) =>
     {
@@ -104,3 +137,4 @@ const createAndUpdateStorage = (employee) => {
         let value=document.querySelector(id).value;
         return value;
     }
+
